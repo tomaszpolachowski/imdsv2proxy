@@ -19,6 +19,7 @@ if ($config->{targetLabels} && ref $config->{targetLabels} eq 'ARRAY') {
     $target_labels = $config->{targetLabels};
 }
 
+my(%pod_ips)=qw();
 my($nft_table_name)=$config->{nftTableName};
 
 my($nft) = Linux::NFTables->new();
@@ -50,11 +51,13 @@ sub process_pod {
     # say $pod->metadata->name . " " . $pod->status->phase;
     if ($pod->status->phase eq 'Running') {
         $nft->run_cmd("add element inet ${nft_table_name} _${pod_ip} { " . $pod->status->podIP . ' }');
+        $pod_ips{$pod->status->podIP} = 1;
     }
-#    elsif ($pod->status->podIP) {
-#    # elsif ($pod->status->phase =~ '^(Terminating|Error|Failed|Completed|Succeeded)$') {
-#        $nft->run_cmd("delete element inet ${nft_table_name} _${pod_ip} { " . $pod->status->podIP . ' }');
-#    }
+   elsif ($pod->status->podIP && $pod_ips{$pod->status->podIP}) {
+   # elsif ($pod->status->phase =~ '^(Terminating|Error|Failed|Completed|Succeeded)$') {
+       $nft->run_cmd("delete element inet ${nft_table_name} _${pod_ip} { " . $pod->status->podIP . ' }');
+       delete $pod_ips{$pod->status->podIP};
+   }
 }
 
 sub handle_event {
