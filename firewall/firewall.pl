@@ -51,10 +51,10 @@ sub process_pod {
     if ($pod->status->phase eq 'Running') {
         $nft->run_cmd("add element inet ${nft_table_name} _${pod_ip} { " . $pod->status->podIP . ' }');
     }
-    elsif ($pod->status->podIP) {
-    # elsif ($pod->status->phase =~ '^(Terminating|Error|Failed|Completed|Succeeded)$') {
-        $nft->run_cmd("delete element inet ${nft_table_name} _${pod_ip} { " . $pod->status->podIP . ' }');
-    }
+#    elsif ($pod->status->podIP) {
+#    # elsif ($pod->status->phase =~ '^(Terminating|Error|Failed|Completed|Succeeded)$') {
+#        $nft->run_cmd("delete element inet ${nft_table_name} _${pod_ip} { " . $pod->status->podIP . ' }');
+#    }
 }
 
 sub handle_event {
