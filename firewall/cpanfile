@@ -1,0 +1,5 @@
+requires 'Kubernetes::REST';
+requires 'Linux::NFTables';
+requires 'File::Slurp';
+requires 'LWP::Protocol::https';
+requires 'JSON::MaybeXS';

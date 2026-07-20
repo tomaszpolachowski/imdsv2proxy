@@ -1,0 +1,35 @@
+name: firewall
+
+on:
+  push:
+    branches:
+      - 'main'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  ghcr:
+    runs-on: ubuntu-latest
+    steps:
+      - id: toLowerCase
+        run: echo "::set-output name=repository::${UPPERCASE_VAR,,}"
+        env:
+          UPPERCASE_VAR: ${{ github.repository }}
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Login to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: firewall
+          file: firewall/firewall.Containerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ghcr.io/${{ steps.toLowerCase.outputs.repository }}/firewall:latest

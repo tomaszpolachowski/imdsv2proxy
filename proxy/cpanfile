@@ -1,0 +1,6 @@
+requires 'Mojolicious::Lite';
+requires 'Mojolicious::Plugin::Cache::Action';
+requires 'CHI';
+requires 'CHI::Driver::BerkeleyDB';
+requires 'Digest::SHA3';
+requires 'JSON::MaybeXS';

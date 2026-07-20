@@ -1,0 +1,28 @@
+{
+    "server": {
+        "endpoint": "https://kubernetes.default.svc",
+        "ssl_verify_server": 1,
+        "ssl_ca_file": "/run/secrets/kubernetes.io/serviceaccount/ca.crt"
+    },
+    "tokenFile": "/run/secrets/kubernetes.io/serviceaccount/token",
+    "targetLabels": [
+        {
+            "name": "aws-metadata-client",
+            "values": [
+                "true"
+            ]
+        },
+        {
+            "name": "postgres-operator.crunchydata.com/data",
+            "values": [
+                "pgbackrest",
+                "postgres"
+            ]
+        }
+    ],
+    "nftTableName": "slop",
+    "targetPorts": [
+        8080
+    ],
+    "sourceNetwork": "10.5.0.0/16"
+}
