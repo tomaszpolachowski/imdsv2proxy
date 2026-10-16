@@ -39,6 +39,7 @@ jobs:
         with:
           tags: ghcr.io/${{ steps.toLowerCase.outputs.repository }}/proxy:latest
           context: proxy
+          containerfiles: proxy/Containerfile
       - name: Push
         uses: redhat-actions/push-to-registry@v3
         with:
