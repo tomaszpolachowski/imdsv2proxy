@@ -30,6 +30,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: firewall
-          file: firewall/firewall.Containerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/${{ steps.toLowerCase.outputs.repository }}/firewall:latest

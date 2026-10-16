@@ -30,6 +30,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: proxy
-          file: proxy/proxy.Containerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ghcr.io/${{ steps.toLowerCase.outputs.repository }}/proxy:latest
